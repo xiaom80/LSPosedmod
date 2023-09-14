@@ -26,8 +26,8 @@ import android.util.Log;
 
 import org.lsposed.lspd.util.Hookers;
 
-import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.XposedInit;
+import de.robv.android.geekposed.geekposedHelpers;
+import de.robv.android.geekposed.geekposedInit;
 import io.github.libxposed.api.XposedInterface;
 import io.github.libxposed.api.annotations.AfterInvocation;
 import io.github.libxposed.api.annotations.XposedHooker;

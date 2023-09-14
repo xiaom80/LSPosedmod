@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with LSPosed.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2020 EdXposed Contributors
+ * Copyright (C) 2020 Edgeekposed Contributors
  * Copyright (C) 2021 - 2022 LSPosed Contributors
  */
 
-package de.robv.android.xposed;
+package de.robv.android.geekposed;
 
 import static org.lsposed.lspd.core.ApplicationServiceClient.serviceClient;
 
@@ -53,7 +53,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import de.robv.android.xposed.services.FileResult;
+import de.robv.android.geekposed.services.FileResult;
 
 /**
  * This class is basically the same as SharedPreferencesImpl from AOSP, but
@@ -161,27 +161,27 @@ public final class XSharedPreferences implements SharedPreferences {
      */
     public XSharedPreferences(String packageName, String prefFileName) {
         boolean newModule = false;
-        var m = XposedInit.getLoadedModules().getOrDefault(packageName, Optional.empty());
+        var m = geekposedInit.getLoadedModules().getOrDefault(packageName, Optional.empty());
         if (m.isPresent()) {
             boolean isModule = false;
-            int xposedminversion = -1;
-            boolean xposedsharedprefs = false;
+            int geekposedminversion = -1;
+            boolean geekposedsharedprefs = false;
             try {
                 Map<String, Object> metaData = MetaDataReader.getMetaData(new File(m.get()));
-                isModule = metaData.containsKey("xposedminversion");
+                isModule = metaData.containsKey("geekposedminversion");
                 if (isModule) {
-                    Object minVersionRaw = metaData.get("xposedminversion");
+                    Object minVersionRaw = metaData.get("geekposedminversion");
                     if (minVersionRaw instanceof Integer) {
-                        xposedminversion = (Integer) minVersionRaw;
+                        geekposedminversion = (Integer) minVersionRaw;
                     } else if (minVersionRaw instanceof String) {
-                        xposedminversion = MetaDataReader.extractIntPart((String) minVersionRaw);
+                        geekposedminversion = MetaDataReader.extractIntPart((String) minVersionRaw);
                     }
-                    xposedsharedprefs = metaData.containsKey("xposedsharedprefs");
+                    geekposedsharedprefs = metaData.containsKey("geekposedsharedprefs");
                 }
             } catch (NumberFormatException | IOException e) {
                 Log.w(TAG, "Apk parser fails: " + e);
             }
-            newModule = isModule && (xposedminversion > 92 || xposedsharedprefs);
+            newModule = isModule && (geekposedminversion > 92 || geekposedsharedprefs);
         }
         if (newModule) {
             mFile = new File(serviceClient.getPrefsPath(packageName), prefFileName + ".xml");

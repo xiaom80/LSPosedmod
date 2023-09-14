@@ -18,7 +18,7 @@
  * Copyright (C) 2021 - 2022 LSPosed Contributors
  */
 
-package de.robv.android.xposed;
+package de.robv.android.geekposed;
 
 import android.app.ActivityThread;
 import android.content.res.Resources;
@@ -42,27 +42,26 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import de.robv.android.xposed.callbacks.XC_InitPackageResources;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import de.robv.android.geekposed.callbacks.XC_InitPackageResources;
+import de.robv.android.geekposed.callbacks.XC_LoadPackage;
 import io.github.libxposed.api.XposedInterface;
 
 /**
- * This class contains most of Xposed's central logic, such as initialization and callbacks used by
  * the native side. It also includes methods to add new hooks.
  */
-public final class XposedBridge {
+public final class geekposedBridge {
     /**
      * The system class loader which can be used to locate Android framework classes.
      * Application classes cannot be retrieved from it.
      *
      * @see ClassLoader#getSystemClassLoader
      */
-    public static final ClassLoader BOOTCLASSLOADER = XposedBridge.class.getClassLoader();
+    public static final ClassLoader BOOTCLASSLOADER = geekposedBridge.class.getClassLoader();
 
     /**
      * @hide
      */
-    public static final String TAG = "LSPosed-Bridge";
+    public static final String TAG = "geekPosed-Bridge";
 
     /**
      * @deprecated Use {@link #getXposedVersion()} instead.
@@ -76,7 +75,7 @@ public final class XposedBridge {
     public static final CopyOnWriteArraySet<XC_LoadPackage> sLoadedPackageCallbacks = new CopyOnWriteArraySet<>();
     /*package*/ static final CopyOnWriteArraySet<XC_InitPackageResources> sInitPackageResourcesCallbacks = new CopyOnWriteArraySet<>();
 
-    private XposedBridge() {
+    private geekposedBridge() {
     }
 
     public static volatile ClassLoader dummyClassLoader = null;
@@ -101,43 +100,41 @@ public final class XposedBridge {
                     // ActivityThread for now and the call will throw an NPE. Luckily they check the
                     // nullability of the result configuration. So we hereby set a dummy
                     // ActivityThread to bypass such a situation.
-                    var fake = XposedHelpers.newInstance(ActivityThread.class);
-                    XposedHelpers.setStaticObjectField(ActivityThread.class, "sCurrentActivityThread", fake);
+                    var fake = geekposedHelpers.newInstance(ActivityThread.class);
+                    posedHelpers.setStaticObjectField(ActivityThread.class, "sCurrentActivityThread", fake);
                     try {
                         TypedArray ta = res.obtainTypedArray(res.getIdentifier(
                                 "preloaded_drawables", "array", "android"));
                         taClass = ta.getClass();
                         ta.recycle();
                     } finally {
-                        XposedHelpers.setStaticObjectField(ActivityThread.class, "sCurrentActivityThread", null);
+                        geekposedHelpers.setStaticObjectField(ActivityThread.class, "sCurrentActivityThread", null);
                     }
                 }
             } catch (Resources.NotFoundException nfe) {
-                XposedBridge.log(nfe);
+                geekposedBridge.log(nfe);
             }
             ResourcesHook.makeInheritable(resClass);
             ResourcesHook.makeInheritable(taClass);
-            ClassLoader myCL = XposedBridge.class.getClassLoader();
+            ClassLoader myCL = geekposedBridge.class.getClassLoader();
             assert myCL != null;
             dummyClassLoader = ResourcesHook.buildDummyClassLoader(myCL.getParent(), resClass.getName(), taClass.getName());
-            dummyClassLoader.loadClass("xposed.dummy.XResourcesSuperClass");
-            dummyClassLoader.loadClass("xposed.dummy.XTypedArraySuperClass");
-            XposedHelpers.setObjectField(myCL, "parent", dummyClassLoader);
+            dummyClassLoader.loadClass("geekposed.dummy.XResourcesSuperClass");
+            dummyClassLoader.loadClass("geekposed.dummy.XTypedArraySuperClass");
+            geekposedHelpers.setObjectField(myCL, "parent", dummyClassLoader);
         } catch (Throwable throwable) {
-            XposedBridge.log(throwable);
-            XposedInit.disableResources = true;
+            geekposedBridge.log(throwable);
+            geekposedInit.disableResources = true;
         }
     }
 
     /**
-     * Returns the currently installed version of the Xposed framework.
      */
     public static int getXposedVersion() {
         return XposedInterface.API;
     }
 
     /**
-     * Writes a message to the Xposed modules log.
      *
      * <p class="warning"><b>DON'T FLOOD THE LOG!!!</b> This is only meant for error logging.
      * If you want to write information/debug messages, use logcat.
@@ -149,7 +146,6 @@ public final class XposedBridge {
     }
 
     /**
-     * Logs a stack trace to the Xposed modules log.
      *
      * <p class="warning"><b>DON'T FLOOD THE LOG!!!</b> This is only meant for error logging.
      * If you want to write information/debug messages, use logcat.
@@ -197,7 +193,7 @@ public final class XposedBridge {
             throw new IllegalArgumentException("Only methods and constructors can be hooked: " + hookMethod);
         } else if (Modifier.isAbstract(hookMethod.getModifiers())) {
             throw new IllegalArgumentException("Cannot hook abstract methods: " + hookMethod);
-        } else if (hookMethod.getDeclaringClass().getClassLoader() == XposedBridge.class.getClassLoader()) {
+        } else if (hookMethod.getDeclaringClass().getClassLoader() == geekposedBridge.class.getClassLoader()) {
             throw new IllegalArgumentException("Do not allow hooking inner methods");
         } else if (hookMethod.getDeclaringClass() == Method.class && hookMethod.getName().equals("invoke")) {
             throw new IllegalArgumentException("Cannot hook Method.invoke");
@@ -268,7 +264,6 @@ public final class XposedBridge {
      * Adds a callback to be executed when an app ("Android package") is loaded.
      *
      * <p class="note">You probably don't need to call this. Simply implement {@link IXposedHookLoadPackage}
-     * in your module class and Xposed will take care of registering it as a callback.
      *
      * @param callback The callback to be executed.
      * @hide
@@ -283,7 +278,6 @@ public final class XposedBridge {
      * Adds a callback to be executed when the resources for an app are initialized.
      *
      * <p class="note">You probably don't need to call this. Simply implement {@link IXposedHookInitPackageResources}
-     * in your module class and Xposed will take care of registering it as a callback.
      *
      * @param callback The callback to be executed.
      * @hide
@@ -296,7 +290,6 @@ public final class XposedBridge {
 
     /**
      * Basically the same as {@link Method#invoke}, but calls the original method
-     * as it was before the interception by Xposed. Also, access permissions are not checked.
      *
      * <p class="caution">There are very few cases where this method is needed. A common mistake is
      * to replace a method and then invoke the original one based on dynamic conditions. This
@@ -403,7 +396,7 @@ public final class XposedBridge {
                     var cb = (XC_MethodHook) snapshot[beforeIdx];
                     cb.beforeHookedMethod(param);
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    geekposedBridge.log(t);
 
                     // reset result (ignoring what the unexpectedly exiting callback did)
                     param.setResult(null);
@@ -429,7 +422,7 @@ public final class XposedBridge {
                     var cb = (XC_MethodHook) snapshot[afterIdx];
                     cb.afterHookedMethod(param);
                 } catch (Throwable t) {
-                    XposedBridge.log(t);
+                    geekposedBridge.log(t);
 
                     // reset to last result (ignoring what the unexpectedly exiting callback did)
                     if (lastThrowable == null) {

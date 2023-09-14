@@ -23,10 +23,10 @@ package android.content.res;
 import android.app.AndroidAppHelper;
 import android.util.DisplayMetrics;
 
-import de.robv.android.xposed.IXposedHookInitPackageResources;
-import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.IXposedHookZygoteInit.StartupParam;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
+import de.robv.android.geekposed.geekposedHookInitPackageResources;
+import de.robv.android.geekposed.geekposedHookZygoteInit;
+import de.robv.android.geekposed.geekposedHookZygoteInit.StartupParam;
+import de.robv.android.geekposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import hidden.HiddenApiBridge;
 
 /**

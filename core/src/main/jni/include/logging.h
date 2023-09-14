@@ -26,7 +26,7 @@
 #include <array>
 
 #ifndef LOG_TAG
-#define LOG_TAG    "LSPosed"
+#define LOG_TAG    "geekPosed"
 #endif
 
 #ifdef LOG_DISABLED

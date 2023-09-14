@@ -98,7 +98,7 @@ public class LSPosedContext implements XposedInterface {
             var mcl = LspModuleClassLoader.loadApk(module.apkPath, module.file.preLoadedDexes, librarySearchPath, initLoader);
             if (mcl.loadClass(XposedModule.class.getName()).getClassLoader() != initLoader) {
                 Log.e(TAG, "  Cannot load module: " + module.packageName);
-                Log.e(TAG, "  The Xposed API classes are compiled into the module's APK.");
+                Log.e(TAG, "  The geekposed API classes are compiled into the module's APK.");
                 Log.e(TAG, "  This may cause strange issues and must be fixed by the module developer.");
                 return false;
             }

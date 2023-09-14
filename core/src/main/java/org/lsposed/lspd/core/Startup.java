@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with LSPosed.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2020 EdXposed Contributors
+ * Copyright (C) 2020 Edgeekposed Contributors
  * Copyright (C) 2021 - 2022 LSPosed Contributors
  */
 
@@ -40,8 +40,8 @@ import org.lsposed.lspd.service.ILSPApplicationService;
 import org.lsposed.lspd.util.Utils;
 
 import dalvik.system.DexFile;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedInit;
+import de.robv.android.geekposed.geekposedBridge;
+import de.robv.android.geekposed.geekposedInit;
 
 public class Startup {
     private static void startBootstrapHook(boolean isSystem) {
@@ -61,21 +61,21 @@ public class Startup {
         LSPosedHelper.hookAllMethods(AttachHooker.class, ActivityThread.class, "attach");
     }
 
-    public static void bootstrapXposed() {
-        // Initialize the Xposed framework
+    public static void bootstrapgeekposed() {
+        // Initialize the geekposed framework
         try {
-            startBootstrapHook(XposedInit.startsSystemServer);
-            XposedInit.loadLegacyModules();
+            startBootstrapHook(geekposedInit.startsSystemServer);
+            geekposedInit.loadLegacyModules();
         } catch (Throwable t) {
-            Utils.logE("error during Xposed initialization", t);
+            Utils.logE("error during geekposed initialization", t);
         }
     }
 
-    public static void initXposed(boolean isSystem, String processName, String appDir, ILSPApplicationService service) {
+    public static void initgeekposed(boolean isSystem, String processName, String appDir, ILSPApplicationService service) {
         // init logger
         ApplicationServiceClient.Init(service, processName);
-        XposedBridge.initXResources();
-        XposedInit.startsSystemServer = isSystem;
+        geekposedBridge.initXResources();
+        geekposedInit.startsSystemServer = isSystem;
         LSPosedContext.isSystemServer = isSystem;
         LSPosedContext.appDir = appDir;
         LSPosedContext.processName = processName;

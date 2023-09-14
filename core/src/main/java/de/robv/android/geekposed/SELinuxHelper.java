@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with LSPosed.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2020 EdXposed Contributors
+ * Copyright (C) 2020 Edgeekposed Contributors
  * Copyright (C) 2021 LSPosed Contributors
  */
 
-package de.robv.android.xposed;
+package de.robv.android.geekposed;
 
-import de.robv.android.xposed.services.BaseService;
-import de.robv.android.xposed.services.DirectAccessService;
+import de.robv.android.geekposed.services.BaseService;
+import de.robv.android.geekposed.services.DirectAccessService;
 
 /**
  * A helper to work with (or without) SELinux, abstracting much of its big complexity.

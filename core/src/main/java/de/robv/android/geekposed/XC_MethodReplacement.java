@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with LSPosed.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2020 EdXposed Contributors
+ * Copyright (C) 2020 Edgeekposed Contributors
  * Copyright (C) 2021 LSPosed Contributors
  */
 
-package de.robv.android.xposed;
+package de.robv.android.geekposed;
 
-import de.robv.android.xposed.callbacks.XCallback;
+import de.robv.android.geekposed.callbacks.XCallback;
 
 /**
  * A special case of {@link XC_MethodHook} which completely replaces the original method.
@@ -51,7 +51,7 @@ public abstract class XC_MethodReplacement extends XC_MethodHook {
             Object result = replaceHookedMethod(param);
             param.setResult(result);
         } catch (Throwable t) {
-            XposedBridge.log(t);
+            geekposedBridge.log(t);
             param.setThrowable(t);
         }
     }

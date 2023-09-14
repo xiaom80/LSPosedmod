@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with LSPosed.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Copyright (C) 2020 EdXposed Contributors
+ * Copyright (C) 2020 Edgeekposed Contributors
  * Copyright (C) 2021 LSPosed Contributors
  */
 
 package android.app;
 
-import static de.robv.android.xposed.XposedHelpers.findClass;
-import static de.robv.android.xposed.XposedHelpers.findFieldIfExists;
-import static de.robv.android.xposed.XposedHelpers.findMethodExactIfExists;
-import static de.robv.android.xposed.XposedHelpers.getObjectField;
-import static de.robv.android.xposed.XposedHelpers.newInstance;
-import static de.robv.android.xposed.XposedHelpers.setFloatField;
+import static de.robv.android.geekposed.geekposedHelpers.findClass;
+import static de.robv.android.geekposed.geekposedHelpers.findFieldIfExists;
+import static de.robv.android.geekposed.geekposedHelpers.findMethodExactIfExists;
+import static de.robv.android.geekposed.geekposedHelpers.getObjectField;
+import static de.robv.android.geekposed.geekposedHelpers.newInstance;
+import static de.robv.android.geekposed.geekposedHelpers.setFloatField;
 
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -37,8 +37,8 @@ import android.view.Display;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
-import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
+import de.robv.android.geekposed.XSharedPreferences;
+import de.robv.android.geekposed.geekposedBridge;
 
 /**
  * Contains various methods for information about the current app.
@@ -71,7 +71,7 @@ public final class AndroidAppHelper {
 		try {
 			return newInstance(CLASS_RESOURCES_KEY, resDir, splitResDirs, overlayDirs, libDirs, displayId, overrideConfiguration, compatInfo);
 		} catch (Throwable t) {
-			XposedBridge.log(t);
+			geekposedBridge.log(t);
 			return null;
 		}
 	}

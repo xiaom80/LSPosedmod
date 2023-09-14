@@ -1,4 +1,4 @@
-package de.robv.android.xposed;
+package de.robv.android.geekposed;
 
 /**
  * Hook the initialization of Zygote process(es), from which all the apps are forked.
@@ -11,7 +11,7 @@ package de.robv.android.xposed;
  *
  * <p>If you want to hook one/multiple specific apps, use {@link IXposedHookLoadPackage} instead.
  */
-public interface IXposedHookZygoteInit extends IXposedMod {
+public interface geekposedHookZygoteInit extends geekposedMod {
     /**
      * Called very early during startup of Zygote.
      * @param startupParam Details about the module itself and the started process.
