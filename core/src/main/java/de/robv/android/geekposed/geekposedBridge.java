@@ -101,7 +101,7 @@ public final class geekposedBridge {
                     // nullability of the result configuration. So we hereby set a dummy
                     // ActivityThread to bypass such a situation.
                     var fake = geekposedHelpers.newInstance(ActivityThread.class);
-                    posedHelpers.setStaticObjectField(ActivityThread.class, "sCurrentActivityThread", fake);
+                    geekposedHelpers.setStaticObjectField(ActivityThread.class, "sCurrentActivityThread", fake);
                     try {
                         TypedArray ta = res.obtainTypedArray(res.getIdentifier(
                                 "preloaded_drawables", "array", "android"));
